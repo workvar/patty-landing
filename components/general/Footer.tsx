@@ -115,7 +115,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="py-20 px-6 bg-black border-t border-white/5 text-sm overflow-hidden">
+    <footer className="py-20 px-6 bg-black border-t border-white/30 text-sm overflow-hidden">
       <div 
         ref={containerRef}
         className="px-20 mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-6 gap-10 items-start"

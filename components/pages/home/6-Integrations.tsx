@@ -3,46 +3,12 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import integrations from '@/data/Pages/home/6-integration';
 import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-import { icons } from '@/assets';
-
-const integrations = [
-  {
-    name: "Jira",
-    icon: icons.JiraIcon,
-    description: "Automatically sync user stories and epics to keep your engineering team aligned."
-  },
-  {
-    name: "Slack",
-    icon: icons.SlackIcon,
-    description: "Generate daily stand-up summaries and receive real-time alerts."
-  },
-  {
-    name: "Notion",
-    icon: icons.NotionIcon,
-    description: "Embed live, interactive roadmaps directly into your project documentation."
-  },
-  {
-    name: "Google Calendar",
-    icon: icons.GoogleCalendarIcon,
-    description: "Auto-schedule sprint reviews and meetings based on team availability."
-  },
-  {
-    name: "Excel",
-    icon: icons.ExcelIcon,
-    description: "Export detailed execution plans and resource data for offline analysis."
-  },
-  {
-    name: "Airtable",
-    icon: icons.AirtableIcon,
-    description: "Sync project data to build custom dashboards and automated workflows."
-  }
-];
 
 const Integrations: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -115,9 +81,9 @@ const Integrations: React.FC = () => {
             <div
               key={idx}
               ref={(el) => { if (el) cardsRef.current[idx] = el; }}
-              className="p-6 rounded-3xl bg-[#0F0F0F] border border-white/5 hover:border-white/20 transition-all group flex flex-col items-center text-center gap-4"
+              className="p-6 rounded-md bg-[#0F0F0F] border border-white/5 hover:border-white/20 transition-all group flex flex-col items-center text-center gap-5"
             >
-              <div className="w-12 h-12 rounded-full flex items-center justify-center group-hover:bg-white/10 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/10 transition-colors">
                 <Image src={tool.icon} alt={tool.name} width={24} height={24} />
               </div>
               <div className="w-[80%]">

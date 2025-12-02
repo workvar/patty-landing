@@ -210,7 +210,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
         className="w-full max-w-7xl mx-auto px-4"
         aria-hidden="true" 
       >
-        <div className="relative rounded-2xl border border-white/10 bg-[#0f0f0f] shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] transform rotate-x-12">
+        <div className="relative rounded-md border border-white/10 bg-[#0f0f0f] shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] transform rotate-x-12">
            {/* Mockup UI */}
            <div className="absolute inset-0 bg-neutral-900/50 flex">
              {/* Sidebar */}

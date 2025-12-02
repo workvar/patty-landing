@@ -4,34 +4,12 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { CornerDownRight } from 'lucide-react';
+import { workflowSteps } from '@/data/Pages/home/3-workflow';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const steps = [
-  {
-    id: "01",
-    label: "Input",
-    title: "Raw Thought",
-    description: "Voice note, whiteboard photo, or messy text dump.",
-    color: "bg-blue-500"
-  },
-  {
-    id: "02",
-    label: "Process",
-    title: "Structure",
-    description: "Patty identifies entities, logic gaps, and requirements.",
-    color: "bg-purple-500"
-  },
-  {
-    id: "03",
-    label: "Output",
-    title: "Action Plan",
-    description: "Formatted stories, sprint breakdown, and timelines.",
-    color: "bg-green-500"
-  }
-];
 
 const Workflow: React.FC = () => {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -96,8 +74,9 @@ const Workflow: React.FC = () => {
   }, []);
 
   return (
-    <section id="workflow" className="py-24 px-4 bg-black/50 border-t border-white/5 overflow-hidden">
+    <section id="workflow" className="py-24 px-4 bg-black/50 overflow-hidden">
       <div className="max-w-7xl mx-auto">
+        {/* Header */}
         <div 
           ref={headerRef}
           className="text-left mb-10"
@@ -108,7 +87,7 @@ const Workflow: React.FC = () => {
            <p className="text-lg text-neutral-400">The pipeline designed for builders.</p>
         </div>
 
-        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="relative grid grid-cols-1 md:grid-cols-3 gap-5">
            {/* Connecting Line (Desktop) */}
            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-[2px] bg-white/5 rounded-full overflow-hidden">
               <div 
@@ -117,21 +96,22 @@ const Workflow: React.FC = () => {
               />
            </div>
 
-          {steps.map((step, idx) => (
+          {/* Steps */}
+          {workflowSteps.map((step, idx) => (
             <div 
               key={step.id}
               ref={(el) => { if (el) stepsRef.current[idx] = el; }}
               className="relative z-10"
             >
-              <div className="p-8 rounded-[2rem] bg-[#0F0F0F] border border-white/5 hover:border-white/10 transition-colors h-full flex flex-col items-start text-left group">
-                <div className={`w-12 h-12 rounded-full ${step.color} bg-opacity-10 text-${step.color.split('-')[1]}-400 flex items-center justify-center mb-6 font-bold border border-${step.color.split('-')[1]}-500/20 group-hover:scale-110 transition-transform duration-300`}>
+              <div className="p-8 rounded-md bg-[#0F0F0F] border border-white/5 hover:border-white/10 transition-colors h-full flex flex-col items-start text-left group">
+                <div className={`w-12 h-12 rounded-full ${step.color} bg-opacity-10 text-${step.color.split('-')[1]}-400 flex items-center justify-center mb-6 font-bold border border-white/5 group-hover:scale-110 transition-transform duration-300`}>
                   {step.id}
                 </div>
                 <h3 className="text-2xl font-semibold text-white mb-2">{step.title}</h3>
                 <p className="text-base text-neutral-400 leading-relaxed">{step.description}</p>
                 
                 {/* Visual Connector for Mobile */}
-                {idx < steps.length - 1 && (
+                {idx < workflowSteps.length - 1 && (
                    <div className="md:hidden absolute -bottom-12 left-1/2 -translate-x-1/2 text-neutral-700">
                       <CornerDownRight />
                    </div>

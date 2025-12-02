@@ -3,32 +3,13 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Users, Rocket, Coffee } from 'lucide-react';
+import useCases from '@/data/Pages/home/4-useCases';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const cases = [
-  {
-    role: "Solo Founders",
-    icon: Rocket,
-    color: "bg-orange-500",
-    benefit: "Get the clarity of a co-founder without giving up equity. Turn shower thoughts into roadmaps.",
-  },
-  {
-    role: "Hobbyists",
-    icon: Coffee,
-    color: "bg-pink-500",
-    benefit: "Bring structure to your passion projects. Move from 'cool idea' to 'shipped' on weekends.",
-  },
-  {
-    role: "Teams",
-    icon: Users,
-    color: "bg-blue-500",
-    benefit: "Stop bikeshedding. Align stakeholders on requirements instantly and export actionable specs.",
-  }
-];
+
 
 const UseCases: React.FC = () => {
   const headerRef = useRef<HTMLHeadingElement>(null);
@@ -94,12 +75,12 @@ const UseCases: React.FC = () => {
           <p className="text-neutral-400 text-lg">Patty is designed for builders who obsess over execution. It's the AI co-founder that structures your execution.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {cases.map((item, idx) => (
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {useCases.map((item, idx) => (
             <div 
               key={idx}
               ref={(el) => { if (el) cardsRef.current[idx] = el; }}
-              className="p-8 rounded-[2rem] bg-[#0A0A0A] border border-white/10 hover:border-white/20 hover:bg-[#111] transition-all group relative overflow-hidden"
+              className="p-8 rounded-md bg-[#0A0A0A] border border-white/10 hover:border-white/20 hover:bg-[#111] transition-all group relative overflow-hidden"
             >
               <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${item.color} bg-opacity-10`}>
                 <item.icon className={`${item.color.replace('bg-', 'text-')}`} size={24} />
