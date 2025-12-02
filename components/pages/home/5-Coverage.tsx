@@ -72,12 +72,12 @@ const Coverage: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 px-6 bg-black border-t border-white/5">
+    <section className="py-24 px-6 bg-black/50 border-t border-white/5">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-20 text-left">
+        <div className="mb-10 text-left">
           <h2 
             ref={headerRef}
-            className="text-4xl md:text-5xl font-medium text-white mb-6 tracking-tight"
+            className="text-4xl md:text-5xl font-bold text-white mb-4 tracking-tight"
           >
             From study planner to startups, <br />
             Patty got you covered.
@@ -103,7 +103,7 @@ const Coverage: React.FC = () => {
                    <GraduationCap className="text-white" size={24} />
                 </div>
                 <h3 className="text-2xl font-medium text-white mb-2">Learning & Skill Development</h3>
-                <p className="text-neutral-400 max-w-sm">Dynamic study plans that adapt when you miss a day.</p>
+                <p className="text-neutral-400 max-w-sm text-base">Dynamic study plans that adapt when you miss a day.</p>
              </div>
              
              {/* Visual: Timeline */}
@@ -146,8 +146,8 @@ const Coverage: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
                    <User className="text-white" size={24} />
                 </div>
-                <h3 className="text-xl font-medium text-white mb-2">Personal Life</h3>
-                <p className="text-neutral-400 text-sm">Organize side projects and daily goals.</p>
+                <h3 className="text-2xl font-medium text-white mb-2">Personal Life</h3>
+                <p className="text-neutral-400 text-base">Organize side projects and daily goals.</p>
              </div>
              
              {/* Visual: Checklist */}
@@ -166,13 +166,13 @@ const Coverage: React.FC = () => {
              ref={(el) => { if (el) cardsRef.current[2] = el; }}
              className="col-span-1 md:col-span-3 rounded-[2.5rem] bg-[#0F0F0F] border border-white/5 p-8 relative overflow-hidden group"
           >
-             <div className="flex justify-between items-start mb-8">
+             <div className="flex justify-between items-start mb-4">
                 <div>
                    <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
                       <Users className="text-white" size={24} />
                    </div>
                    <h3 className="text-2xl font-medium text-white mb-2">Teams</h3>
-                   <p className="text-neutral-400">Alignment without the meetings.</p>
+                   <p className="text-neutral-400 text-base">Alignment without the meetings.</p>
                 </div>
              </div>
              
@@ -212,7 +212,7 @@ const Coverage: React.FC = () => {
                       <Video className="text-white" size={24} />
                    </div>
                    <h3 className="text-2xl font-medium text-white mb-2">Content & Freelance</h3>
-                   <p className="text-neutral-400">Manage clients and content pipelines.</p>
+                   <p className="text-neutral-400 text-base">Manage clients and content pipelines.</p>
                 </div>
              </div>
              

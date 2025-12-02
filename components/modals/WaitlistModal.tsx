@@ -662,7 +662,7 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
                         <span>Join Waitlist</span>
                       )}
                     </button>
-                    <p className="text-[10px] text-center text-neutral-500 mt-4">
+                    <p className="text-xs text-center text-neutral-500 mt-4">
                       This site is protected by reCAPTCHA and the Google
                       <a href="#" className="underline hover:text-neutral-400 mx-1 focus:outline-none focus:text-white">Privacy Policy</a> and
                       <a href="#" className="underline hover:text-neutral-400 mx-1 focus:outline-none focus:text-white">Terms of Service</a> apply.

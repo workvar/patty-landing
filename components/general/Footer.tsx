@@ -9,6 +9,63 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
+type FooterLink = {
+  label: string;
+  href: string;
+};
+
+type FooterSection = {
+  id: string;
+  title: string;
+  links: FooterLink[];
+};
+
+const footerSections: Record<string, FooterSection> = {
+  features: {
+    id: 'features',
+    title: 'Features',
+    links: [
+      { label: 'Patty', href: '#' },
+      { label: 'Integrations', href: '#' },
+      { label: 'Project Management', href: '#' },
+    ],
+  },
+  legal: {
+    id: 'legal',
+    title: 'Legal',
+    links: [
+      { label: 'Privacy Policy', href: '#' },
+      { label: 'Terms and Conditions', href: '#' },
+      { label: 'Refund Policy', href: '#' },
+    ],
+  },
+  resources: {
+    id: 'resources',
+    title: 'Resources',
+    links: [
+      { label: 'Blogs', href: '/blog' },
+      { label: 'Case Studies', href: '#' },
+    ],
+  },
+  about: {
+    id: 'about',
+    title: 'About Us',
+    links: [
+      { label: 'Careers', href: '#' },
+      { label: 'Affiliate Program', href: '#' },
+    ],
+  },
+  support: {
+    id: 'support',
+    title: 'Support',
+    links: [
+      { label: 'Contact Us', href: '#' },
+      { label: 'FAQs', href: '#' },
+      { label: 'Help Center', href: '#' },
+    ],
+  },
+};
+
 const Footer: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -45,14 +102,26 @@ const Footer: React.FC = () => {
     }
   }, []);
 
+  // Layout for the link sections (3 columns x 2 rows)
+  // Row 1: Features | Legal | Resources
+  // Row 2: Blank   | About  | Support
+  const footerGridOrder: (keyof typeof footerSections | null)[] = [
+    'features',
+    'legal',
+    'resources',
+    null,
+    'about',
+    'support',
+  ];
+
   return (
     <footer className="py-20 px-6 bg-black border-t border-white/5 text-sm overflow-hidden">
       <div 
         ref={containerRef}
-        className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10"
+        className="px-20 mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-6 gap-10 items-start"
       >
-        {/* Brand Column */}
-        <div data-footer-item className="col-span-2 md:col-span-3 lg:col-span-1 space-y-4">
+        {/* Brand Column (left) */}
+        <div data-footer-item className="space-y-4 lg:col-span-2 px-20">
           <Link href="/" className="block" aria-label="Patty Home">
             <div className="text-4xl font-bold tracking-tighter text-white mb-1">W.</div>
             <div className="font-medium text-white text-xs tracking-widest uppercase">WorkVar</div>
@@ -64,42 +133,43 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        {/* Features */}
-        <div data-footer-item className="flex flex-col gap-4">
-          <h4 className="font-semibold text-white">Features</h4>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Patty</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Integrations</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Project Management</a>
-        </div>
+        {/* Links Column (right, 80%) */}
+        <div className="lg:col-span-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+            {footerGridOrder.map((sectionKey, idx) => {
+              if (sectionKey === null) {
+                // Blank cell in grid (only show on >= sm)
+                return <div key={`blank-${idx}`} className="hidden sm:block" />;
+              }
 
-        {/* Legal */}
-        <div data-footer-item className="flex flex-col gap-4">
-          <h4 className="font-semibold text-white">Legal</h4>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Privacy Policy</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Terms and Conditions</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Refund Policy</a>
-        </div>
+              const section = footerSections[sectionKey];
 
-        {/* Resources */}
-        <div data-footer-item className="flex flex-col gap-4">
-          <h4 className="font-semibold text-white">Resources</h4>
-          <Link href="/blog" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Blogs</Link>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Case Studies</a>
-        </div>
-
-        {/* About Us */}
-        <div data-footer-item className="flex flex-col gap-4">
-          <h4 className="font-semibold text-white">About Us</h4>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Careers</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Affiliate Program</a>
-        </div>
-
-        {/* Support */}
-        <div data-footer-item className="flex flex-col gap-4">
-          <h4 className="font-semibold text-white">Support</h4>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Contact Us</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">FAQs</a>
-          <a href="#" className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline">Help Center</a>
+              return (
+                <div key={section.id} data-footer-item className="flex flex-col gap-4">
+                  <h4 className="font-semibold text-white">{section.title}</h4>
+                  {section.links.map((link) =>
+                    link.href.startsWith('/') ? (
+                      <Link
+                        key={link.label}
+                        href={link.href}
+                        className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        key={link.label}
+                        href={link.href}
+                        className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline"
+                      >
+                        {link.label}
+                      </a>
+                    )
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </footer>

@@ -81,16 +81,17 @@ const UseCases: React.FC = () => {
   }, []);
 
   return (
-    <section className="py-24 px-4 bg-black relative">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-left mb-16">
+    <section className="py-24 px-4 bg-black/50 relative">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-left mb-10">
           <h2 
             ref={headerRef}
-            className="text-4xl md:text-5xl font-semibold text-white mb-6 tracking-tighter"
+            className="text-4xl md:text-5xl font-bold text-white mb-4"
           >
             Built for those who <br />
             obsess over execution.
           </h2>
+          <p className="text-neutral-400 text-lg">Patty is designed for builders who obsess over execution. It's the AI co-founder that structures your execution.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -104,7 +105,7 @@ const UseCases: React.FC = () => {
                 <item.icon className={`${item.color.replace('bg-', 'text-')}`} size={24} />
               </div>
               <h3 className="text-2xl font-medium text-white mb-3">{item.role}</h3>
-              <p className="text-neutral-400 leading-relaxed text-sm">{item.benefit}</p>
+              <p className="text-neutral-400 text-base">{item.benefit}</p>
               
               {/* Subtle background glow based on color */}
               <div className={`absolute -bottom-10 -right-10 w-32 h-32 rounded-full blur-[50px] opacity-10 ${item.color}`} />

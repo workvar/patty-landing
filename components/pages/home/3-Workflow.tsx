@@ -96,16 +96,16 @@ const Workflow: React.FC = () => {
   }, []);
 
   return (
-    <section id="workflow" className="py-24 px-4 bg-black border-t border-white/5 overflow-hidden">
-      <div className="max-w-6xl mx-auto">
+    <section id="workflow" className="py-24 px-4 bg-black/50 border-t border-white/5 overflow-hidden">
+      <div className="max-w-7xl mx-auto">
         <div 
           ref={headerRef}
-          className="text-left mb-20"
+          className="text-left mb-10"
         >
-           <h2 className="text-4xl md:text-5xl font-semibold text-white mb-4 tracking-tighter">
+           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
              From Chaos to Clarity
            </h2>
-           <p className="text-neutral-400">The pipeline designed for builders.</p>
+           <p className="text-lg text-neutral-400">The pipeline designed for builders.</p>
         </div>
 
         <div className="relative grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -127,8 +127,8 @@ const Workflow: React.FC = () => {
                 <div className={`w-12 h-12 rounded-full ${step.color} bg-opacity-10 text-${step.color.split('-')[1]}-400 flex items-center justify-center mb-6 font-bold border border-${step.color.split('-')[1]}-500/20 group-hover:scale-110 transition-transform duration-300`}>
                   {step.id}
                 </div>
-                <h3 className="text-xl font-semibold text-white mb-2">{step.title}</h3>
-                <p className="text-sm text-neutral-400 leading-relaxed">{step.description}</p>
+                <h3 className="text-2xl font-semibold text-white mb-2">{step.title}</h3>
+                <p className="text-base text-neutral-400 leading-relaxed">{step.description}</p>
                 
                 {/* Visual Connector for Mobile */}
                 {idx < steps.length - 1 && (

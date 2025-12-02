@@ -61,18 +61,18 @@ const Features: React.FC = () => {
   }, []);
 
   return (
-    <section id="features" ref={sectionRef} className="py-24 bg-black relative overflow-hidden">
+    <section id="features" ref={sectionRef} className="py-24 bg-gradient-to-b from-black/20 to-black/50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div 
           ref={headerRef}
-          className="mb-20 text-left max-w-2xl space-y-4"
+          className="mb-10 text-left space-y-4"
         >
-          <h2 className="text-4xl md:text-5xl font-semibold text-white tracking-tighter">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
             Total control. <br /> 
-            <span className="text-neutral-500">Zero administrative overhead.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-white to-white/40">Zero administrative overhead.</span>
           </h2>
-          <p className="text-lg text-neutral-300">
-            Patty manages the boring parts of product management so you can focus on the vision.
+          <p className="text-lg text-neutral-400">
+            Patty manages the boring parts of planning your project so you can focus on building.
           </p>
         </div>
 
@@ -89,7 +89,7 @@ const Features: React.FC = () => {
                   <Brain className="text-white" size={24} aria-hidden="true" />
                 </div>
                 <h3 className="text-2xl font-medium text-white mb-2">Deep Context Awareness</h3>
-                <p className="text-neutral-300 max-w-sm">Patty ingests your messy docs, voice notes, and Slack threads to build a semantic understanding of your product.</p>
+                <p className="text-neutral-300 max-w-sm text-base">Patty ingests your messy docs, voice notes, and Slack threads to build a semantic understanding of your product.</p>
               </div>
               
               {/* Visual */}
@@ -122,7 +122,7 @@ const Features: React.FC = () => {
                   <Zap className="text-yellow-400" size={24} aria-hidden="true" />
                 </div>
                 <h3 className="text-2xl font-medium text-white mb-2">Auto-Sprints</h3>
-                <p className="text-neutral-300 text-sm mb-8">Estimates complexity and groups tasks into realistic 2-week sprints.</p>
+                <p className="text-neutral-300 text-base mb-8">Estimates complexity and groups tasks into realistic sprints.</p>
                 
                 <div className="mt-auto space-y-2" aria-hidden="true">
                    {['Sprint 24', 'Sprint 25', 'Sprint 26'].map((s, i) => (
@@ -148,8 +148,8 @@ const Features: React.FC = () => {
                 <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center mb-6">
                   <ListTodo className="text-green-400" size={24} aria-hidden="true" />
                 </div>
-                <h3 className="text-xl font-medium text-white mb-2">Perfect Specs</h3>
-                <p className="text-neutral-300 text-sm">Gherkin-syntax stories ready for dev.</p>
+                <h3 className="text-2xl font-medium text-white mb-2">Perfect Specs</h3>
+                <p className="text-neutral-300 text-base">Gherkin-syntax stories ready for dev.</p>
              </div>
              <div className="bg-[#111] p-4 rounded-xl border border-white/5 font-mono text-[10px] text-neutral-400 leading-relaxed" aria-hidden="true">
                 <span className="text-purple-400">Feature:</span> Dark Mode<br/>
@@ -171,7 +171,7 @@ const Features: React.FC = () => {
                   <GitPullRequest className="text-purple-400" size={24} aria-hidden="true" />
                 </div>
                 <h3 className="text-2xl font-medium text-white mb-2">Living Roadmaps</h3>
-                <p className="text-neutral-300">Priorities change. Patty automatically reshuffles your timeline, flagging dependencies and risks instantly.</p>
+                <p className="text-neutral-300 text-base">Priorities change. Patty automatically reshuffles your timeline, flagging dependencies and risks instantly.</p>
              </div>
              <div className="flex-1 w-full" aria-hidden="true">
                 <div className="relative h-32 w-full">
@@ -185,7 +185,6 @@ const Features: React.FC = () => {
                 </div>
              </div>
           </div>
-
         </div>
       </div>
     </section>

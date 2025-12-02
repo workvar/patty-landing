@@ -11,8 +11,9 @@ export function GridBackground({ children }: GridBackgroundProps) {
       <div
         className={cn(
           "absolute inset-0 pointer-events-none",
-          "[background-size:40px_40px]",
-          "[background-image:linear-gradient(to_right,rgba(255,255,255,0.3)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.3)_1px,transparent_1px)]",
+          // Dotted background pattern
+          "[background-size:32px_32px]",
+          "[background-image:radial-gradient(circle,rgba(255,255,255,0.25)_1px,transparent_1px)]",
         )}
       />
       {/* Radial gradient for the container to give a faded look towards the edges/bottom if desired, 

@@ -161,7 +161,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
         />
       </div>
       
-      <div className="relative z-10 max-w-6xl mx-auto w-full space-y-8 mb-20 text-center flex flex-col items-center">
+      <div className="relative z-10 max-w-7xl mx-auto w-full space-y-8 mb-20 text-center flex flex-col items-center">
         <div
           ref={badgeRef}
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md text-sm text-neutral-300 shadow-xl"
@@ -183,7 +183,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
 
         <p
           ref={subtitleRef}
-          className="text-xl text-neutral-300 max-w-2xl leading-relaxed mx-auto"
+          className="text-xl text-neutral-400 max-w-2xl leading-relaxed mx-auto"
         >
           Turn vague ideas into actionable specs, user stories, and estimates in seconds. 
           Patty is the AI co-founder that structures your execution.
@@ -207,7 +207,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
       <div
         ref={mockupRef}
         style={{ perspective: "1200px" }}
-        className="w-full max-w-6xl mx-auto px-4"
+        className="w-full max-w-7xl mx-auto px-4"
         aria-hidden="true" 
       >
         <div className="relative rounded-2xl border border-white/10 bg-[#0f0f0f] shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] transform rotate-x-12">
@@ -235,7 +235,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
              
              {/* Main Content */}
              <div className="flex-1 p-8 overflow-hidden relative">
-                <div className="max-w-3xl mx-auto space-y-8">
+                <div className="max-w-6xl mx-auto space-y-8">
                    {/* Header */}
                    <div className="flex justify-between items-end border-b border-white/5 pb-6">
                       <div>
