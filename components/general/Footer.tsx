@@ -4,6 +4,8 @@ import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { brand } from '@/assets';
+import Image from 'next/image';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -122,13 +124,13 @@ const Footer: React.FC = () => {
       >
         {/* Brand Column (left) */}
         <div data-footer-item className="space-y-4 lg:col-span-2 px-20">
-          <Link href="/" className="block" aria-label="Patty Home">
-            <div className="text-4xl font-bold tracking-tighter text-white mb-1">W.</div>
-            <div className="font-medium text-white text-xs tracking-widest uppercase">WorkVar</div>
+          <Link href="/" className="block text-center" aria-label="WorkVar Home">
+            <Image src={brand.WorkVarLogo} className='mx-auto' alt="WorkVar Logo" width={120} height={120} />
+            <div className="mt-4 font-medium text-white text-sm tracking-widest">Workवार</div>
           </Link>
-          <div className="text-neutral-400 text-xs leading-relaxed pt-2">
-            Copyright © 2025<br />
-            WorkVar, Inc.<br />
+          <div className="text-neutral-400 text-xs leading-relaxed pt-2 mx-auto text-center">
+            Copyright © {new Date().getFullYear()} <br />
+            WorkVar Pvt. Ltd.<br />
             All rights reserved
           </div>
         </div>
@@ -145,7 +147,7 @@ const Footer: React.FC = () => {
               const section = footerSections[sectionKey];
 
               return (
-                <div key={section.id} data-footer-item className="flex flex-col gap-4">
+                <div key={section.id} data-footer-item className="flex flex-col gap-1">
                   <h4 className="font-semibold text-white">{section.title}</h4>
                   {section.links.map((link) =>
                     link.href.startsWith('/') ? (

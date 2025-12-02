@@ -4,6 +4,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Image from 'next/image';
+import { brand } from '../../assets';
 
 interface NavbarProps {
   onOpenWaitlist: () => void;
@@ -43,10 +45,7 @@ const Navbar: React.FC<NavbarProps> = ({ onOpenWaitlist }) => {
         }`}
       >
         <Link href="/" className="flex items-center gap-2 pl-4" aria-label="Patty Home">
-          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg shadow-white/10">
-            <div className="w-3 h-3 bg-black rounded-full" />
-          </div>
-          <span className="text-lg font-semibold tracking-tight text-white hidden sm:block">Patty</span>
+          <Image src={brand.WorkVarLogo} alt="WorkVar Logo" width={50} height={50} />
         </Link>
 
         <div className="hidden md:flex items-center rounded-full px-1 p-1">
