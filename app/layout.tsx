@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Script from 'next/script'
+import ReCaptchaProvider from '../components/providers/ReCaptchaProvider'
 
 export const metadata: Metadata = {
   title: 'Patty | Your AI Co-founder for Execution',
@@ -15,11 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body className="bg-black min-h-screen selection:bg-white/20 selection:text-white flex flex-col">
-        <Script
-          src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-          strategy="lazyOnload"
-        />
-        {children}
+        <ReCaptchaProvider>
+          {children}
+        </ReCaptchaProvider>
       </body>
     </html>
   )

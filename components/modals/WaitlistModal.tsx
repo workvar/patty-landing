@@ -2,240 +2,29 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { X, CheckCircle, Loader2, Search, ChevronDown } from 'lucide-react';
+import { X, CheckCircle, Loader2 } from 'lucide-react';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 
 interface WaitlistModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-interface Country {
-  code: string;
-  name: string;
-  dialCode: string;
-  flag: string;
-}
-
-// Comprehensive country list with flags
-const countries: Country[] = [
-  { code: 'US', name: 'United States', dialCode: '+1', flag: '🇺🇸' },
-  { code: 'GB', name: 'United Kingdom', dialCode: '+44', flag: '🇬🇧' },
-  { code: 'CA', name: 'Canada', dialCode: '+1', flag: '🇨🇦' },
-  { code: 'AU', name: 'Australia', dialCode: '+61', flag: '🇦🇺' },
-  { code: 'DE', name: 'Germany', dialCode: '+49', flag: '🇩🇪' },
-  { code: 'FR', name: 'France', dialCode: '+33', flag: '🇫🇷' },
-  { code: 'IT', name: 'Italy', dialCode: '+39', flag: '🇮🇹' },
-  { code: 'ES', name: 'Spain', dialCode: '+34', flag: '🇪🇸' },
-  { code: 'NL', name: 'Netherlands', dialCode: '+31', flag: '🇳🇱' },
-  { code: 'BE', name: 'Belgium', dialCode: '+32', flag: '🇧🇪' },
-  { code: 'CH', name: 'Switzerland', dialCode: '+41', flag: '🇨🇭' },
-  { code: 'AT', name: 'Austria', dialCode: '+43', flag: '🇦🇹' },
-  { code: 'SE', name: 'Sweden', dialCode: '+46', flag: '🇸🇪' },
-  { code: 'NO', name: 'Norway', dialCode: '+47', flag: '🇳🇴' },
-  { code: 'DK', name: 'Denmark', dialCode: '+45', flag: '🇩🇰' },
-  { code: 'FI', name: 'Finland', dialCode: '+358', flag: '🇫🇮' },
-  { code: 'PL', name: 'Poland', dialCode: '+48', flag: '🇵🇱' },
-  { code: 'IE', name: 'Ireland', dialCode: '+353', flag: '🇮🇪' },
-  { code: 'PT', name: 'Portugal', dialCode: '+351', flag: '🇵🇹' },
-  { code: 'GR', name: 'Greece', dialCode: '+30', flag: '🇬🇷' },
-  { code: 'CZ', name: 'Czech Republic', dialCode: '+420', flag: '🇨🇿' },
-  { code: 'HU', name: 'Hungary', dialCode: '+36', flag: '🇭🇺' },
-  { code: 'RO', name: 'Romania', dialCode: '+40', flag: '🇷🇴' },
-  { code: 'BG', name: 'Bulgaria', dialCode: '+359', flag: '🇧🇬' },
-  { code: 'HR', name: 'Croatia', dialCode: '+385', flag: '🇭🇷' },
-  { code: 'SK', name: 'Slovakia', dialCode: '+421', flag: '🇸🇰' },
-  { code: 'SI', name: 'Slovenia', dialCode: '+386', flag: '🇸🇮' },
-  { code: 'LT', name: 'Lithuania', dialCode: '+370', flag: '🇱🇹' },
-  { code: 'LV', name: 'Latvia', dialCode: '+371', flag: '🇱🇻' },
-  { code: 'EE', name: 'Estonia', dialCode: '+372', flag: '🇪🇪' },
-  { code: 'IN', name: 'India', dialCode: '+91', flag: '🇮🇳' },
-  { code: 'CN', name: 'China', dialCode: '+86', flag: '🇨🇳' },
-  { code: 'JP', name: 'Japan', dialCode: '+81', flag: '🇯🇵' },
-  { code: 'KR', name: 'South Korea', dialCode: '+82', flag: '🇰🇷' },
-  { code: 'SG', name: 'Singapore', dialCode: '+65', flag: '🇸🇬' },
-  { code: 'MY', name: 'Malaysia', dialCode: '+60', flag: '🇲🇾' },
-  { code: 'TH', name: 'Thailand', dialCode: '+66', flag: '🇹🇭' },
-  { code: 'PH', name: 'Philippines', dialCode: '+63', flag: '🇵🇭' },
-  { code: 'ID', name: 'Indonesia', dialCode: '+62', flag: '🇮🇩' },
-  { code: 'VN', name: 'Vietnam', dialCode: '+84', flag: '🇻🇳' },
-  { code: 'TW', name: 'Taiwan', dialCode: '+886', flag: '🇹🇼' },
-  { code: 'HK', name: 'Hong Kong', dialCode: '+852', flag: '🇭🇰' },
-  { code: 'NZ', name: 'New Zealand', dialCode: '+64', flag: '🇳🇿' },
-  { code: 'BR', name: 'Brazil', dialCode: '+55', flag: '🇧🇷' },
-  { code: 'MX', name: 'Mexico', dialCode: '+52', flag: '🇲🇽' },
-  { code: 'AR', name: 'Argentina', dialCode: '+54', flag: '🇦🇷' },
-  { code: 'CL', name: 'Chile', dialCode: '+56', flag: '🇨🇱' },
-  { code: 'CO', name: 'Colombia', dialCode: '+57', flag: '🇨🇴' },
-  { code: 'PE', name: 'Peru', dialCode: '+51', flag: '🇵🇪' },
-  { code: 'VE', name: 'Venezuela', dialCode: '+58', flag: '🇻🇪' },
-  { code: 'ZA', name: 'South Africa', dialCode: '+27', flag: '🇿🇦' },
-  { code: 'EG', name: 'Egypt', dialCode: '+20', flag: '🇪🇬' },
-  { code: 'NG', name: 'Nigeria', dialCode: '+234', flag: '🇳🇬' },
-  { code: 'KE', name: 'Kenya', dialCode: '+254', flag: '🇰🇪' },
-  { code: 'IL', name: 'Israel', dialCode: '+972', flag: '🇮🇱' },
-  { code: 'AE', name: 'United Arab Emirates', dialCode: '+971', flag: '🇦🇪' },
-  { code: 'SA', name: 'Saudi Arabia', dialCode: '+966', flag: '🇸🇦' },
-  { code: 'TR', name: 'Turkey', dialCode: '+90', flag: '🇹🇷' },
-  { code: 'RU', name: 'Russia', dialCode: '+7', flag: '🇷🇺' },
-  { code: 'UA', name: 'Ukraine', dialCode: '+380', flag: '🇺🇦' },
-  { code: 'PK', name: 'Pakistan', dialCode: '+92', flag: '🇵🇰' },
-  { code: 'BD', name: 'Bangladesh', dialCode: '+880', flag: '🇧🇩' },
-  { code: 'LK', name: 'Sri Lanka', dialCode: '+94', flag: '🇱🇰' },
-  { code: 'NP', name: 'Nepal', dialCode: '+977', flag: '🇳🇵' },
-  { code: 'MM', name: 'Myanmar', dialCode: '+95', flag: '🇲🇲' },
-  { code: 'KH', name: 'Cambodia', dialCode: '+855', flag: '🇰🇭' },
-  { code: 'LA', name: 'Laos', dialCode: '+856', flag: '🇱🇦' },
-  { code: 'MN', name: 'Mongolia', dialCode: '+976', flag: '🇲🇳' },
-  { code: 'KZ', name: 'Kazakhstan', dialCode: '+7', flag: '🇰🇿' },
-  { code: 'UZ', name: 'Uzbekistan', dialCode: '+998', flag: '🇺🇿' },
-  { code: 'IQ', name: 'Iraq', dialCode: '+964', flag: '🇮🇶' },
-  { code: 'IR', name: 'Iran', dialCode: '+98', flag: '🇮🇷' },
-  { code: 'AF', name: 'Afghanistan', dialCode: '+93', flag: '🇦🇫' },
-  { code: 'JO', name: 'Jordan', dialCode: '+962', flag: '🇯🇴' },
-  { code: 'LB', name: 'Lebanon', dialCode: '+961', flag: '🇱🇧' },
-  { code: 'KW', name: 'Kuwait', dialCode: '+965', flag: '🇰🇼' },
-  { code: 'QA', name: 'Qatar', dialCode: '+974', flag: '🇶🇦' },
-  { code: 'BH', name: 'Bahrain', dialCode: '+973', flag: '🇧🇭' },
-  { code: 'OM', name: 'Oman', dialCode: '+968', flag: '🇴🇲' },
-  { code: 'YE', name: 'Yemen', dialCode: '+967', flag: '🇾🇪' },
-  { code: 'DZ', name: 'Algeria', dialCode: '+213', flag: '🇩🇿' },
-  { code: 'MA', name: 'Morocco', dialCode: '+212', flag: '🇲🇦' },
-  { code: 'TN', name: 'Tunisia', dialCode: '+216', flag: '🇹🇳' },
-  { code: 'LY', name: 'Libya', dialCode: '+218', flag: '🇱🇾' },
-  { code: 'SD', name: 'Sudan', dialCode: '+249', flag: '🇸🇩' },
-  { code: 'ET', name: 'Ethiopia', dialCode: '+251', flag: '🇪🇹' },
-  { code: 'GH', name: 'Ghana', dialCode: '+233', flag: '🇬🇭' },
-  { code: 'TZ', name: 'Tanzania', dialCode: '+255', flag: '🇹🇿' },
-  { code: 'UG', name: 'Uganda', dialCode: '+256', flag: '🇺🇬' },
-  { code: 'RW', name: 'Rwanda', dialCode: '+250', flag: '🇷🇼' },
-  { code: 'ZM', name: 'Zambia', dialCode: '+260', flag: '🇿🇲' },
-  { code: 'ZW', name: 'Zimbabwe', dialCode: '+263', flag: '🇿🇼' },
-  { code: 'AO', name: 'Angola', dialCode: '+244', flag: '🇦🇴' },
-  { code: 'MZ', name: 'Mozambique', dialCode: '+258', flag: '🇲🇿' },
-  { code: 'MG', name: 'Madagascar', dialCode: '+261', flag: '🇲🇬' },
-  { code: 'MU', name: 'Mauritius', dialCode: '+230', flag: '🇲🇺' },
-  { code: 'RE', name: 'Réunion', dialCode: '+262', flag: '🇷🇪' },
-  { code: 'UY', name: 'Uruguay', dialCode: '+598', flag: '🇺🇾' },
-  { code: 'PY', name: 'Paraguay', dialCode: '+595', flag: '🇵🇾' },
-  { code: 'BO', name: 'Bolivia', dialCode: '+591', flag: '🇧🇴' },
-  { code: 'EC', name: 'Ecuador', dialCode: '+593', flag: '🇪🇨' },
-  { code: 'CR', name: 'Costa Rica', dialCode: '+506', flag: '🇨🇷' },
-  { code: 'PA', name: 'Panama', dialCode: '+507', flag: '🇵🇦' },
-  { code: 'GT', name: 'Guatemala', dialCode: '+502', flag: '🇬🇹' },
-  { code: 'HN', name: 'Honduras', dialCode: '+504', flag: '🇭🇳' },
-  { code: 'NI', name: 'Nicaragua', dialCode: '+505', flag: '🇳🇮' },
-  { code: 'SV', name: 'El Salvador', dialCode: '+503', flag: '🇸🇻' },
-  { code: 'DO', name: 'Dominican Republic', dialCode: '+1', flag: '🇩🇴' },
-  { code: 'CU', name: 'Cuba', dialCode: '+53', flag: '🇨🇺' },
-  { code: 'JM', name: 'Jamaica', dialCode: '+1', flag: '🇯🇲' },
-  { code: 'TT', name: 'Trinidad and Tobago', dialCode: '+1', flag: '🇹🇹' },
-  { code: 'BB', name: 'Barbados', dialCode: '+1', flag: '🇧🇧' },
-  { code: 'BS', name: 'Bahamas', dialCode: '+1', flag: '🇧🇸' },
-  { code: 'IS', name: 'Iceland', dialCode: '+354', flag: '🇮🇸' },
-  { code: 'LU', name: 'Luxembourg', dialCode: '+352', flag: '🇱🇺' },
-  { code: 'MT', name: 'Malta', dialCode: '+356', flag: '🇲🇹' },
-  { code: 'CY', name: 'Cyprus', dialCode: '+357', flag: '🇨🇾' },
-  { code: 'AL', name: 'Albania', dialCode: '+355', flag: '🇦🇱' },
-  { code: 'MK', name: 'North Macedonia', dialCode: '+389', flag: '🇲🇰' },
-  { code: 'RS', name: 'Serbia', dialCode: '+381', flag: '🇷🇸' },
-  { code: 'ME', name: 'Montenegro', dialCode: '+382', flag: '🇲🇪' },
-  { code: 'BA', name: 'Bosnia and Herzegovina', dialCode: '+387', flag: '🇧🇦' },
-  { code: 'XK', name: 'Kosovo', dialCode: '+383', flag: '🇽🇰' },
-];
-
-// Sort countries alphabetically, but keep USA and India at the top (USA first, then India)
-const sortedCountries = [
-  ...countries.filter(c => c.code === 'US'),
-  ...countries.filter(c => c.code === 'IN'),
-  ...countries.filter(c => c.code !== 'US' && c.code !== 'IN').sort((a, b) => a.name.localeCompare(b.name))
-];
-
-// Role options
-const roles = [
-  'Founder',
-  'Co-Founder',
-  'CEO',
-  'CTO',
-  'CPO',
-  'CMO',
-  'CFO',
-  'Product Manager',
-  'Senior Product Manager',
-  'Principal Product Manager',
-  'VP of Product',
-  'Head of Product',
-  'Product Owner',
-  'Engineering Manager',
-  'Senior Engineer',
-  'Software Engineer',
-  'Frontend Engineer',
-  'Backend Engineer',
-  'Full Stack Engineer',
-  'DevOps Engineer',
-  'QA Engineer',
-  'Tech Lead',
-  'Engineering Director',
-  'VP of Engineering',
-  'Designer',
-  'UI/UX Designer',
-  'Product Designer',
-  'Visual Designer',
-  'Design Director',
-  'Head of Design',
-  'Marketing Manager',
-  'Growth Manager',
-  'Marketing Director',
-  'Sales Manager',
-  'Business Development',
-  'Operations Manager',
-  'Project Manager',
-  'Program Manager',
-  'Scrum Master',
-  'Data Analyst',
-  'Data Scientist',
-  'Business Analyst',
-  'Consultant',
-  'Investor',
-  'Student',
-  'Other'
-].sort((a, b) => a.localeCompare(b));
 
 const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState<'form' | 'success'>('form');
   const [loading, setLoading] = useState(false);
-  const [selectedCountry, setSelectedCountry] = useState<Country>(sortedCountries.find(c => c.code === 'US') || sortedCountries[0]);
-  const [isCountryDropdownOpen, setIsCountryDropdownOpen] = useState(false);
-  const [countrySearch, setCountrySearch] = useState('');
-  const [selectedRole, setSelectedRole] = useState<string>('');
-  const [isRoleDropdownOpen, setIsRoleDropdownOpen] = useState(false);
-  const [roleSearch, setRoleSearch] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [userNumber, setUserNumber] = useState<number | null>(null);
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const modalRef = useRef<HTMLDivElement>(null);
   const firstInputRef = useRef<HTMLInputElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const countryDropdownRef = useRef<HTMLDivElement>(null);
-  const countrySearchRef = useRef<HTMLInputElement>(null);
-  const roleDropdownRef = useRef<HTMLDivElement>(null);
-  const roleSearchRef = useRef<HTMLInputElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const modalContentRef = useRef<HTMLDivElement>(null);
-  const countryDropdownContentRef = useRef<HTMLDivElement>(null);
-  const roleDropdownContentRef = useRef<HTMLDivElement>(null);
   const loaderRef = useRef<HTMLDivElement>(null);
   const loaderTextRef = useRef<HTMLSpanElement>(null);
-
-  const filteredCountries = countrySearch
-    ? sortedCountries.filter(country =>
-      country.name.toLowerCase().includes(countrySearch.toLowerCase()) ||
-      country.dialCode.includes(countrySearch) ||
-      country.code.toLowerCase().includes(countrySearch.toLowerCase())
-    )
-    : sortedCountries;
-
-  const filteredRoles = roleSearch
-    ? roles.filter(role =>
-      role.toLowerCase().includes(roleSearch.toLowerCase())
-    )
-    : roles;
 
   useEffect(() => {
     if (isOpen) {
@@ -251,40 +40,16 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
       return () => clearTimeout(timer);
     } else {
       document.body.style.overflow = 'unset';
-      setIsCountryDropdownOpen(false);
-      setCountrySearch('');
-      setIsRoleDropdownOpen(false);
-      setRoleSearch('');
+      setEmail('');
+      setError(null);
+      setUserNumber(null);
+      setStep('form');
     }
     return () => {
       document.body.style.overflow = 'unset';
     };
   }, [isOpen]);
 
-  // Close dropdowns when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        countryDropdownRef.current &&
-        !countryDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsCountryDropdownOpen(false);
-        setCountrySearch('');
-      }
-      if (
-        roleDropdownRef.current &&
-        !roleDropdownRef.current.contains(event.target as Node)
-      ) {
-        setIsRoleDropdownOpen(false);
-        setRoleSearch('');
-      }
-    };
-
-    if (isCountryDropdownOpen || isRoleDropdownOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }
-  }, [isCountryDropdownOpen, isRoleDropdownOpen]);
 
   // Focus trap and Escape key
   useEffect(() => {
@@ -292,15 +57,7 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
       if (!isOpen) return;
 
       if (e.key === 'Escape') {
-        if (isCountryDropdownOpen) {
-          setIsCountryDropdownOpen(false);
-          setCountrySearch('');
-        } else if (isRoleDropdownOpen) {
-          setIsRoleDropdownOpen(false);
-          setRoleSearch('');
-        } else {
-          onClose();
-        }
+        onClose();
         return;
       }
 
@@ -332,7 +89,7 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
       window.addEventListener('keydown', handleKeyDown);
     }
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen, onClose, isCountryDropdownOpen, isRoleDropdownOpen]);
+  }, [isOpen, onClose]);
 
   // Animate modal entrance/exit
   useEffect(() => {
@@ -363,38 +120,6 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  // Animate dropdowns
-  useEffect(() => {
-    if (isCountryDropdownOpen && countryDropdownContentRef.current) {
-      gsap.fromTo(
-        countryDropdownContentRef.current,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.2 }
-      );
-    } else if (countryDropdownContentRef.current) {
-      gsap.to(countryDropdownContentRef.current, {
-        opacity: 0,
-        y: -10,
-        duration: 0.15,
-      });
-    }
-  }, [isCountryDropdownOpen]);
-
-  useEffect(() => {
-    if (isRoleDropdownOpen && roleDropdownContentRef.current) {
-      gsap.fromTo(
-        roleDropdownContentRef.current,
-        { opacity: 0, y: -10 },
-        { opacity: 1, y: 0, duration: 0.2 }
-      );
-    } else if (roleDropdownContentRef.current) {
-      gsap.to(roleDropdownContentRef.current, {
-        opacity: 0,
-        y: -10,
-        duration: 0.15,
-      });
-    }
-  }, [isRoleDropdownOpen]);
 
   // Animate loading state
   useEffect(() => {
@@ -416,15 +141,48 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
     }
   }, [loading]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null);
     setLoading(true);
 
-    // Simulate API call and Captcha verification
-    setTimeout(() => {
+    try {
+      if (!executeRecaptcha) {
+        throw new Error('reCAPTCHA not loaded');
+      }
+
+      // Execute reCAPTCHA v3
+      const recaptchaToken = await executeRecaptcha('waitlist_submit');
+
+      // Call API
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email,
+          recaptchaToken,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to join waitlist');
+      }
+
+      // Store user_number from response
+      if (data.user_number) {
+        setUserNumber(data.user_number);
+      }
+
       setLoading(false);
       setStep('success');
-    }, 1500);
+    } catch (err) {
+      setLoading(false);
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+    }
   };
 
   if (!isOpen) return null;
@@ -460,183 +218,24 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
 
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-1.5">
-                    <label htmlFor="name" className="text-xs font-medium text-neutral-400 ml-1">Name</label>
-                    <input
-                      ref={firstInputRef}
-                      id="name"
-                      required
-                      type="text"
-                      placeholder="John Doe"
-                      className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-colors"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label htmlFor="phone" className="text-xs font-medium text-neutral-400 ml-1">Phone</label>
-                    <div className="flex gap-2">
-                      <div className="relative flex-shrink-0" ref={countryDropdownRef}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setIsCountryDropdownOpen(!isCountryDropdownOpen);
-                            if (!isCountryDropdownOpen) {
-                              setTimeout(() => countrySearchRef.current?.focus(), 100);
-                            }
-                          }}
-                          className="flex items-center gap-2 bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-3 text-white text-sm focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-colors min-w-[160px]"
-                          aria-label="Select country"
-                        >
-                          <span className="text-lg">{selectedCountry.flag}</span>
-                          <span className="text-xs">{selectedCountry.dialCode}</span>
-                          <ChevronDown size={14} className={`ml-auto transition-transform ${isCountryDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        {isCountryDropdownOpen && (
-                            <div
-                              ref={countryDropdownContentRef}
-                              className="absolute top-full left-0 mt-2 bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl z-50 max-h-[300px] overflow-hidden flex flex-col w-[320px]"
-                            >
-                              <div className="p-2 border-b border-neutral-800">
-                                <div className="relative">
-                                  <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
-                                  <input
-                                    ref={countrySearchRef}
-                                    type="text"
-                                    value={countrySearch}
-                                    onChange={(e) => setCountrySearch(e.target.value)}
-                                    placeholder="Search country..."
-                                    className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 pl-10 py-2 text-white text-sm focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
-                                  />
-                                </div>
-                              </div>
-                              <div className="overflow-y-auto max-h-[240px]">
-                                {filteredCountries.length > 0 ? (
-                                  filteredCountries.map((country) => (
-                                    <button
-                                      key={country.code}
-                                      type="button"
-                                      onClick={() => {
-                                        setSelectedCountry(country);
-                                        setIsCountryDropdownOpen(false);
-                                        setCountrySearch('');
-                                      }}
-                                      className={`w-full flex items-start gap-3 px-4 py-2.5 text-left text-sm transition-colors ${selectedCountry.code === country.code
-                                          ? 'bg-neutral-800 text-white'
-                                          : 'text-neutral-300 hover:bg-neutral-800 hover:text-white'
-                                        }`}
-                                    >
-                                      <span className="text-xl flex-shrink-0 mt-0.5">{country.flag}</span>
-                                      <span className="flex-1 min-w-0 break-words leading-tight">{country.name}</span>
-                                      <span className="text-neutral-500 text-xs flex-shrink-0">{country.dialCode}</span>
-                                    </button>
-                                  ))
-                                ) : (
-                                  <div className="px-4 py-8 text-center text-neutral-500 text-sm">
-                                    No countries found
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                      </div>
-                      <input
-                        id="phone"
-                        type="tel"
-                        placeholder="(555) 000-0000"
-                        className="flex-1 bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-colors"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="space-y-1.5">
                     <label htmlFor="email" className="text-xs font-medium text-neutral-400 ml-1">Email</label>
                     <input
+                      ref={firstInputRef}
                       id="email"
                       required
                       type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
                       placeholder="john@company.com"
                       className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-colors"
                     />
                   </div>
 
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="space-y-1.5">
-                      <label htmlFor="role" className="text-xs font-medium text-neutral-400 ml-1">Role</label>
-                      <div className="relative" ref={roleDropdownRef}>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setIsRoleDropdownOpen(!isRoleDropdownOpen);
-                            if (!isRoleDropdownOpen) {
-                              setTimeout(() => roleSearchRef.current?.focus(), 100);
-                            }
-                          }}
-                          className="w-full flex items-center justify-between bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-colors"
-                          aria-label="Select role"
-                        >
-                          <span className={selectedRole ? 'text-white' : 'text-neutral-500'}>
-                            {selectedRole || 'Select Role'}
-                          </span>
-                          <ChevronDown size={14} className={`text-neutral-500 transition-transform ${isRoleDropdownOpen ? 'rotate-180' : ''}`} />
-                        </button>
-
-                        {isRoleDropdownOpen && (
-                            <div
-                              ref={roleDropdownContentRef}
-                              className="absolute top-full left-0 right-0 mt-2 bg-neutral-900 border border-neutral-800 rounded-xl shadow-2xl z-50 max-h-[300px] overflow-hidden flex flex-col"
-                            >
-                              <div className="p-2 border-b border-neutral-800">
-                                <div className="relative">
-                                  <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-neutral-500" />
-                                  <input
-                                    ref={roleSearchRef}
-                                    type="text"
-                                    value={roleSearch}
-                                    onChange={(e) => setRoleSearch(e.target.value)}
-                                    placeholder="Search role..."
-                                    className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 pl-10 py-2 text-white text-sm focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
-                                  />
-                                </div>
-                              </div>
-                              <div className="overflow-y-auto max-h-[240px]">
-                                {filteredRoles.length > 0 ? (
-                                  filteredRoles.map((role) => (
-                                    <button
-                                      key={role}
-                                      type="button"
-                                      onClick={() => {
-                                        setSelectedRole(role);
-                                        setIsRoleDropdownOpen(false);
-                                        setRoleSearch('');
-                                      }}
-                                      className={`w-full flex items-start gap-3 px-4 py-2.5 text-left text-sm transition-colors ${selectedRole === role
-                                          ? 'bg-neutral-800 text-white'
-                                          : 'text-neutral-300 hover:bg-neutral-800 hover:text-white'
-                                        }`}
-                                    >
-                                      <span className="flex-1 min-w-0 break-words leading-tight">{role}</span>
-                                    </button>
-                                  ))
-                                ) : (
-                                  <div className="px-4 py-8 text-center text-neutral-500 text-sm">
-                                    No roles found
-                                  </div>
-                                )}
-                              </div>
-                            </div>
-                          )}
-                      </div>
+                  {error && (
+                    <div className="text-red-400 text-sm px-1">
+                      {error}
                     </div>
-                    <div className="space-y-1.5">
-                      <label htmlFor="company" className="text-xs font-medium text-neutral-400 ml-1">Company</label>
-                      <input
-                        id="company"
-                        type="text"
-                        placeholder="Acme Inc."
-                        className="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500 transition-colors"
-                      />
-                    </div>
-                  </div>
+                  )}
 
                   <div className="pt-4">
                     <button
@@ -676,7 +275,10 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
                   <CheckCircle size={40} />
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-medium text-white">You're on the list!</h3>
+                  <h3 className="text-2xl font-medium text-white">You have made it to the waitlist!</h3>
+                  {userNumber && (
+                    <p className="text-md font-semibold text-green-500">You're #{userNumber} on the list</p>
+                  )}
                   <p className="text-neutral-300 max-w-xs mx-auto">We'll notify you as soon as your spot opens up. Keep an eye on your inbox.</p>
                 </div>
                 <button
