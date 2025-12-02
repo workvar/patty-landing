@@ -1,11 +1,11 @@
 import { Fragment } from "react";
-import { coverageCards } from '@/data/Pages/home/5-coverage';
+import { coverageCards } from '@/data/Pages/home/6-coverage';
 import { CheckCircle2 } from "lucide-react";
 
 const LearningAndSkillDevelopment = () => {
     return (
         <Fragment>
-            <div className="relative z-10">
+            <div className="relative">
                 <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6">
                     {coverageCards[0].icon}
                 </div>

@@ -1,10 +1,11 @@
 import React from 'react';
 import Hero from '../components/pages/home/1-Hero';
 import Features from '../components/pages/home/2-Features';
-import Workflow from '../components/pages/home/3-Workflow';
-import UseCases from '../components/pages/home/4-UseCases';
-import Coverage from '../components/pages/home/5-Coverage';
-import Integrations from '../components/pages/home/6-Integrations';
+import Impact from '../components/pages/home/3-Impact';
+import Workflow from '../components/pages/home/4-Workflow';
+import UseCases from '../components/pages/home/5-UseCases';
+import Coverage from '../components/pages/home/6-Coverage';
+import Integrations from '../components/pages/home/7-Integrations';
 import { GridBackground } from '../components/ui/GridBackground';
 
 interface HomeProps {
@@ -16,6 +17,7 @@ const Home: React.FC<HomeProps> = ({ onOpenWaitlist }) => {
     <GridBackground>
       <Hero onOpenWaitlist={onOpenWaitlist} />
       <Features />
+      <Impact />
       <Workflow />
       <UseCases />
       <Coverage />

@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { coverageCards } from '@/data/Pages/home/5-coverage';
+import { coverageCards } from '@/data/Pages/home/6-coverage';
 
 const ContentAndFreelance = () => {
     return (

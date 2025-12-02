@@ -23,13 +23,6 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.glass-card {
-  background: linear-gradient(180deg, rgba(30, 30, 30, 0.4) 0%, rgba(20, 20, 20, 0.4) 100%);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 4px 24px -1px rgba(0, 0, 0, 0.2);
-}
-
 .text-glow {
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
