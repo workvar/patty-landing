@@ -30,5 +30,18 @@ Create a `.env.local` file in the root directory with the following variables:
 - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` - Your Google reCAPTCHA site key
 
 ### Optional (Analytics)
+- `NEXT_PUBLIC_GTM_ID` - Google Tag Manager Container ID (e.g., `GTM-XXXXXXX`)
 - `NEXT_PUBLIC_GA_ID` - Google Analytics Measurement ID (e.g., `G-XXXXXXXXXX`)
 - `NEXT_PUBLIC_CLARITY_ID` - Microsoft Clarity Project ID
+
+## Notes
+
+### pnpm Build Scripts Warning
+
+You may see a warning about `unrs-resolver` build scripts being ignored. This is safe to ignore - `unrs-resolver` is a legitimate Jest dependency and the warning doesn't affect functionality. If you want to approve it, run:
+
+```bash
+pnpm approve-builds
+```
+
+Then select `unrs-resolver` from the interactive menu.
