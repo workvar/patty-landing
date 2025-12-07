@@ -18,3 +18,17 @@ View your app in AI Studio: https://ai.studio/apps/drive/1eZ2HRvzvnfDHFvGlJ3s-0f
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+### Required
+- `NEXT_PUBLIC_SUPABASE_URL` - Your Supabase project URL
+- `SUPABASE_SERVICE_ROLE_KEY` - Your Supabase service role key
+- `RECAPTCHA_SECRET_KEY` - Your Google reCAPTCHA secret key
+- `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` - Your Google reCAPTCHA site key
+
+### Optional (Analytics)
+- `NEXT_PUBLIC_GA_ID` - Google Analytics Measurement ID (e.g., `G-XXXXXXXXXX`)
+- `NEXT_PUBLIC_CLARITY_ID` - Microsoft Clarity Project ID
