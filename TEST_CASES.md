@@ -71,7 +71,7 @@
 - **TC-HERO-003**: Verify hero subtitle text is displayed correctly
 - **TC-HERO-004**: Verify "Join Waitlist" button is visible and clickable
 - **TC-HERO-005**: Verify "Join Waitlist" button opens waitlist modal
-- **TC-HERO-006**: Verify badge "Patty Beta is releasing on January 6, 2026" is displayed
+- **TC-HERO-006**: Verify badge "Patty Beta is releasing on January 26, 2026" is displayed
 - **TC-HERO-007**: Verify hero animations (fade in, slide up) work on page load
 - **TC-HERO-008**: Verify 3D product mockup is displayed
 - **TC-HERO-009**: Verify mockup has floating animation

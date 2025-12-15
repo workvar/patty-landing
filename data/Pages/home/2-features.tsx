@@ -33,7 +33,7 @@ const features: FeatureProps[] = [
     },
     {
         title: "Living Roadmaps",
-        description: "Patty creates living roadmaps for your project, that can be updated in real-time.",
+        description: "Patty creates living roadmaps for your project, that can be updated in real-time, and based on your team's availability.",
         icon: <Map className="text-white" size={24} />,
         component: <LivingRoadmaps />,
         className: "col-span-1 md:col-span-3 lg:col-span-8 bg-gradient-to-br from-purple-900/80 via-neutral-900 to-black border border-white/10 rounded-xl p-8 overflow-hidden flex flex-col md:flex-row gap-8 items-center"

@@ -16,7 +16,7 @@ export const coverageCards: CoverageCardConfig[] = [
   {
     id: 'learning',
     title: 'Learning & Skill Development',
-    description: 'Dynamic study plans that adapt when you miss a day.',
+    description: 'Dynamic study plans that adapt when you miss a day, turning big goals into small, focused sessions with reminders, spaced repetition and project-based milestones.',
     icon: <GraduationCap className="text-white" size={24} />,
     className:
       'col-span-1 md:col-span-1 rounded-xl bg-gradient-to-br from-emerald-900/80 via-neutral-900 to-black border border-white/5 p-8 relative overflow-hidden flex flex-col justify-between mask-linear-fade select-none pointer-events-none',
@@ -25,7 +25,7 @@ export const coverageCards: CoverageCardConfig[] = [
   {
     id: 'personal',
     title: 'Personal Life',
-    description: 'Organize side projects and daily goals.',
+    description: 'Organize side projects, habits, and daily goals with one source of truth that keeps track of context, dependencies and what actually deserves your focus today.',
     icon: <User className="text-white" size={24} />,
     className:
       'col-span-1 md:col-span-1 rounded-xl bg-gradient-to-br from-blue-900/80 via-neutral-900 to-black border border-white/5 p-8 relative overflow-hidden flex flex-col justify-between group mask-linear-fade select-none pointer-events-none',
@@ -34,7 +34,7 @@ export const coverageCards: CoverageCardConfig[] = [
   {
     id: 'teams',
     title: 'Teams',
-    description: 'Alignment without the meetings.',
+    description: 'Alignment with minimal meetings, keep roadmaps, specs and execution in sync so everyone knows what’s shipping, why it matters and what\'s blocking progress.',
     icon: <Users className="text-white" size={24} />,
     className:
       'col-span-1 md:col-span-1 rounded-xl bg-gradient-to-br from-violet-900/80 via-neutral-900 to-black border border-white/5 p-8 relative overflow-hidden group mask-linear-fade select-none pointer-events-none',
@@ -43,7 +43,7 @@ export const coverageCards: CoverageCardConfig[] = [
   {
     id: 'content',
     title: 'Content & Freelance',
-    description: 'Manage clients and content pipelines.',
+    description: 'Manage clients and content pipelines with living briefs, timelines and feedback loops so nothing slips through the cracks from first draft to final delivery.',
     icon: <Video className="text-white" size={24} />,
     className:
       'col-span-1 md:col-span-1 rounded-xl bg-gradient-to-br from-rose-900/80 via-neutral-900 to-black border border-white/5 p-8 relative overflow-hidden group mask-linear-fade select-none pointer-events-none',

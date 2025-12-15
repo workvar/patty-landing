@@ -4,27 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Check } from 'lucide-react';
 
-const plans = [
-  {
-    name: "Starter",
-    price: "0",
-    description: "For solo builders just getting started.",
-    features: ["5 Projects", "Basic AI Structuring", "Simple Roadmap", "Community Support"]
-  },
-  {
-    name: "Pro",
-    price: "29",
-    description: "For professional product managers and founders.",
-    features: ["Unlimited Projects", "Deep Context Awareness", "Jira & Linear Sync", "Priority Support", "Advanced Sprint Planning"],
-    popular: true
-  },
-  {
-    name: "Team",
-    price: "99",
-    description: "For startups scaling their execution.",
-    features: ["5 Team Members", "Shared Workspaces", "Role-based Permissions", "API Access", "Custom Workflows"]
-  }
-];
+// Pricing plans will be added closer to launch.
 
 const Pricing: React.FC = () => {
   const [annual, setAnnual] = useState(true);
@@ -92,7 +72,7 @@ const Pricing: React.FC = () => {
           
           <div 
             ref={toggleRef}
-            className="flex items-center justify-start gap-4 pt-8"
+            className="flex items-center justify-start gap-4 pt-8 hidden"
           >
             <span className={`text-sm ${!annual ? 'text-white' : 'text-neutral-400'}`}>Monthly</span>
             <button 
@@ -110,50 +90,19 @@ const Pricing: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {plans.map((plan, idx) => (
-            <div
-              key={idx}
-              ref={(el) => { if (el) cardsRef.current[idx] = el; }}
-              className={`relative p-8 rounded-3xl border flex flex-col ${
-                plan.popular 
-                  ? 'bg-neutral-900/50 border-white/20' 
-                  : 'bg-black border-white/10'
-              }`}
-            >
-              {plan.popular && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-white text-black text-xs font-bold">
-                  Most Popular
-                </div>
-              )}
-              
-              <div className="mb-8">
-                <h3 className="text-xl font-medium text-white mb-2">{plan.name}</h3>
-                <div className="flex items-baseline gap-1 mb-2">
-                  <span className="text-4xl font-semibold text-white">${plan.price}</span>
-                  <span className="text-neutral-400">/mo</span>
-                </div>
-                <p className="text-sm text-neutral-300">{plan.description}</p>
-              </div>
-
-              <div className="flex-grow space-y-4 mb-8">
-                {plan.features.map((feat, fIdx) => (
-                  <div key={fIdx} className="flex items-start gap-3">
-                    <Check size={18} className="text-white mt-0.5" />
-                    <span className="text-sm text-neutral-300">{feat}</span>
-                  </div>
-                ))}
-              </div>
-
-              <button className={`w-full py-3 rounded-full text-sm font-medium transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-black ${
-                plan.popular 
-                  ? 'bg-white text-black hover:bg-neutral-200 focus:ring-white' 
-                  : 'bg-neutral-800 text-white hover:bg-neutral-700 focus:ring-neutral-700'
-              }`}>
-                {plan.price === "0" ? "Start Building" : "Get Started"}
-              </button>
-            </div>
-          ))}
+        <div className="mt-10">
+          <div className="rounded-3xl border border-dashed border-white/20 bg-neutral-900/40 px-8 py-10 max-w-full">
+            <p className="text-sm font-mono uppercase tracking-[0.2em] text-neutral-500 mb-3">
+              Coming Soon
+            </p>
+            <h2 className="text-2xl md:text-3xl font-medium text-white mb-3">
+              Pricing to be updated soon.
+            </h2>
+            <p className="text-sm text-neutral-300 mb-6">
+              Patty is still in active development. We’re finalizing plans that work for solo builders, teams, and companies.
+              Join the waitlist on the homepage to be the first to know when pricing goes live.
+            </p>
+          </div>
         </div>
       </div>
     </div>

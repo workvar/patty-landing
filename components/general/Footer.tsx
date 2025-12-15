@@ -14,6 +14,7 @@ if (typeof window !== 'undefined') {
 type FooterLink = {
   label: string;
   href: string;
+  external?: boolean;
 };
 
 type FooterSection = {
@@ -23,47 +24,51 @@ type FooterSection = {
 };
 
 const footerSections: Record<string, FooterSection> = {
-  features: {
-    id: 'features',
-    title: 'Features',
-    links: [
-      { label: 'Patty', href: '#' },
-      { label: 'Integrations', href: '#' },
-      { label: 'Project Management', href: '#' },
-    ],
-  },
-  legal: {
-    id: 'legal',
-    title: 'Legal',
-    links: [
-      { label: 'Privacy Policy', href: '#' },
-      { label: 'Terms and Conditions', href: '#' },
-      { label: 'Refund Policy', href: '#' },
-    ],
-  },
+  // disabled for now
+  // features: {
+  //   id: 'features',
+  //   title: 'Features',
+  //   links: [
+  //     { label: 'Patty', href: '#' },
+  //     { label: 'Integrations', href: '#' },
+  //     { label: 'Project Management', href: '#' },
+  //   ],
+  // },
   resources: {
     id: 'resources',
     title: 'Resources',
     links: [
       { label: 'Blogs', href: '/blog' },
-      { label: 'Case Studies', href: '#' },
+      { label: 'Case Studies', href: '/case-studies' },
     ],
   },
-  about: {
-    id: 'about',
-    title: 'About Us',
+  // disabled for now
+  // about: {
+  //   id: 'about',
+  //   title: 'About Us',
+  //   links: [
+  //     { label: 'Careers', href: '#' },
+  //     { label: 'Affiliate Program', href: '#' },
+  //   ],
+  // },
+  legal: {
+    id: 'legal',
+    title: 'Legal',
     links: [
-      { label: 'Careers', href: '#' },
-      { label: 'Affiliate Program', href: '#' },
+      { label: 'Privacy Policy', href: 'https://www.workvar.com/privacy-policy', external: true },
+      { label: 'Terms of use', href: 'https://www.workvar.com/terms', external: true },
+      { label: 'Cookie Policy', href: 'https://www.workvar.com/cookie-policy', external: true },
+      // { label: 'Refund Policy', href: '#' },
     ],
   },
   support: {
     id: 'support',
     title: 'Support',
     links: [
-      { label: 'Contact Us', href: '#' },
-      { label: 'FAQs', href: '#' },
-      { label: 'Help Center', href: '#' },
+      { label: 'Contact Us', href: 'https://www.workvar.com/contact', external: true },
+      { label: 'About WorkVar', href: 'https://www.workvar.com', external: true },
+      // { label: 'FAQs', href: '#' },
+      // { label: 'Help Center', href: '#' },
     ],
   },
 };
@@ -108,11 +113,11 @@ const Footer: React.FC = () => {
   // Row 1: Features | Legal | Resources
   // Row 2: Blank   | About  | Support
   const footerGridOrder: (keyof typeof footerSections | null)[] = [
-    'features',
+    // 'features',
     'legal',
     'resources',
     null,
-    'about',
+    // 'about',
     'support',
   ];
 
@@ -120,7 +125,7 @@ const Footer: React.FC = () => {
     <footer className="py-20 px-6 bg-black border-t border-white/30 text-sm overflow-hidden">
       <div 
         ref={containerRef}
-        className="px-20 mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-6 gap-10 items-start"
+        className="px-20 mx-auto px-6 lg:px-20 grid grid-cols-1 lg:grid-cols-6 gap-10 items-center"
       >
         {/* Brand Column (left) */}
         <div data-footer-item className="space-y-4 lg:col-span-2 px-20">
@@ -139,10 +144,10 @@ const Footer: React.FC = () => {
         <div className="lg:col-span-4">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
             {footerGridOrder.map((sectionKey, idx) => {
-              if (sectionKey === null) {
+              if (sectionKey === null) return null
                 // Blank cell in grid (only show on >= sm)
-                return <div key={`blank-${idx}`} className="hidden sm:block" />;
-              }
+                // return <div key={`blank-${idx}`} className="hidden sm:block" />;
+              // }
 
               const section = footerSections[sectionKey];
 
@@ -150,10 +155,12 @@ const Footer: React.FC = () => {
                 <div key={section.id} data-footer-item className="flex flex-col gap-1">
                   <h4 className="font-semibold text-white">{section.title}</h4>
                   {section.links.map((link) =>
-                    link.href.startsWith('/') ? (
+                    link.href.startsWith('http') ? (
                       <Link
                         key={link.label}
                         href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="text-neutral-400 hover:text-white transition-colors focus:text-white focus:outline-none focus:underline"
                       >
                         {link.label}

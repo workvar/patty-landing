@@ -168,7 +168,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
           role="status"
         >
           <Sparkles size={14} className="text-yellow-200" aria-hidden="true" />
-          <span className="font-medium">Patty Beta is releasing on January 6, 2026</span>
+          <span className="font-medium">Patty Beta is releasing on January 26, 2026</span>
         </div>
 
         <h1

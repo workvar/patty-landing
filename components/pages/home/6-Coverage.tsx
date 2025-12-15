@@ -86,7 +86,7 @@ const Coverage: React.FC = () => {
                   ref={paragraphRef}
                   className="text-lg text-neutral-400 max-w-3xl leading-relaxed"
                >
-                  Whether you're planning for learning how to build your own AI agents or managing a
+                  Whether you're planning to learn how to build your own AI agents or managing a
                   growing startup, Patty adapts to your pace, scale, and ambition.
                </p>
             </div>
