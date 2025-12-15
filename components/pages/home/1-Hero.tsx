@@ -213,7 +213,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
       <div
         ref={mockupRef}
         // style={{ perspective: "1200px" }}
-        className="w-full w-full md:max-w-7xl mx-auto px-4"
+        className="w-full w-full md:max-w-7xl mx-auto px-4 hidden md:block"
         aria-hidden="true" 
       >
         <div className="relative rounded-md border border-white/10 bg-[#0f0f0f] shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] transform scale-90 lg:scale-100 rotate-x-12">
