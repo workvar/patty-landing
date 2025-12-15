@@ -95,7 +95,7 @@ const Features: React.FC = () => {
         </div>
 
         {/* BENTO GRID for features */}
-        <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-12 gap-6 auto-rows-[minmax(300px,auto)] mb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 auto-rows-[minmax(300px,auto)] mb-24">
           {features.map((feature, idx) => (
             <div
               key={idx}

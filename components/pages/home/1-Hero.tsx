@@ -25,6 +25,12 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     if (badgeRef.current) {
       gsap.fromTo(
         badgeRef.current,
@@ -93,7 +99,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
         ease: 'sine.inOut',
       });
     }
-  }, []);
+  }, [mounted]);
 
   useEffect(() => {
     if (conversationState === 'typing') {
@@ -206,24 +212,24 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
       {/* 3D Product Mockup */}
       <div
         ref={mockupRef}
-        style={{ perspective: "1200px" }}
-        className="w-full max-w-7xl mx-auto px-4"
+        // style={{ perspective: "1200px" }}
+        className="w-full w-full md:max-w-7xl mx-auto px-4"
         aria-hidden="true" 
       >
-        <div className="relative rounded-md border border-white/10 bg-[#0f0f0f] shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] transform rotate-x-12">
+        <div className="relative rounded-md border border-white/10 bg-[#0f0f0f] shadow-2xl overflow-hidden aspect-[16/9] md:aspect-[21/9] transform scale-90 lg:scale-100 rotate-x-12">
            {/* Mockup UI */}
            <div className="absolute inset-0 bg-neutral-900/50 flex">
              {/* Sidebar */}
-             <div className="w-64 border-r border-white/5 p-4 hidden md:flex flex-col gap-4">
+             <div className="w-40 md:w-56 lg:w-64 border-r border-white/5 p-4 hidden md:flex flex-col gap-4">
                 <div className="flex items-center gap-2 mb-6">
-                   <div className="w-6 h-6 rounded bg-white/10"></div>
-                   <div className="w-20 h-3 rounded bg-white/10"></div>
+                   <div className="w-5 h-5 md:w-6 md:h-6 rounded bg-white/10"></div>
+                   <div className="w-16 md:w-20 h-3 rounded bg-white/10"></div>
                 </div>
                 <div className="space-y-2">
                    {[1,2,3,4].map(i => (
                      <div key={i} className="flex items-center gap-3 p-2 rounded hover:bg-white/5 cursor-pointer">
-                        <div className="w-4 h-4 rounded-full bg-white/5"></div>
-                        <div className="w-24 h-2 rounded bg-white/5"></div>
+                        <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-white/5"></div>
+                        <div className="w-20 md:w-24 h-2 rounded bg-white/5"></div>
                      </div>
                    ))}
                 </div>
@@ -240,23 +246,23 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
                    <div className="flex justify-between items-end border-b border-white/5 pb-6">
                       <div>
                          <div className="inline-flex items-center gap-2 text-xs text-blue-400 mb-2">
-                           <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                           <span className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-blue-400"></span>
                            Planning Phase
                          </div>
                          <h2 className="text-3xl font-semibold text-white">Q4 Product Roadmap</h2>
                       </div>
                       <div className="flex -space-x-2">
                          {[1,2,3].map(i => (
-                           <div key={i} className="w-8 h-8 rounded-full bg-neutral-800 border border-black flex items-center justify-center text-[10px] text-white/50">U{i}</div>
+                           <div key={i} className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 rounded-full bg-neutral-800 border border-black flex items-center justify-center text-[10px] text-white/50">U{i}</div>
                          ))}
-                         <div className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold">+</div>
+                         <div className="w-6 h-6 md:w-7 md:h-7 lg:w-8 lg:h-8 rounded-full bg-white text-black flex items-center justify-center text-xs font-bold">+</div>
                       </div>
                    </div>
 
                    {/* Chat/Interaction Area */}
                    <div className="space-y-6">
                       <div className="flex gap-4">
-                         <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
+                         <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400 flex-shrink-0">
                            <Sparkles size={14} />
                          </div>
                          <div className="space-y-2">
@@ -278,8 +284,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
 
                       {/* User Input (Animated) */}
                       <div className="flex gap-4 flex-row-reverse">
-                         <div className="w-8 h-8 rounded-full bg-neutral-700 flex items-center justify-center flex-shrink-0">
-                            <div className="w-4 h-4 rounded-full bg-neutral-500"></div>
+                         <div className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-neutral-700 flex items-center justify-center flex-shrink-0">
+                            <div className="w-3 h-3 md:w-4 md:h-4 rounded-full bg-neutral-500"></div>
                          </div>
                          <div className="space-y-2 text-right">
                             <div className="text-sm font-medium text-white">You</div>
@@ -303,9 +309,9 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
                                
                                {conversationState === 'thinking' ? (
                                   <div className="flex items-center gap-1 p-4 rounded-2xl rounded-tl-none bg-white/5 w-fit">
-                                     <div ref={(el) => { if (el) thinkingDotsRef.current[0] = el; }} className="w-2 h-2 rounded-full bg-neutral-400"></div>
-                                     <div ref={(el) => { if (el) thinkingDotsRef.current[1] = el; }} className="w-2 h-2 rounded-full bg-neutral-400"></div>
-                                     <div ref={(el) => { if (el) thinkingDotsRef.current[2] = el; }} className="w-2 h-2 rounded-full bg-neutral-400"></div>
+                                     <div ref={(el) => { if (el) thinkingDotsRef.current[0] = el; }} className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-neutral-400"></div>
+                                     <div ref={(el) => { if (el) thinkingDotsRef.current[1] = el; }} className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-neutral-400"></div>
+                                     <div ref={(el) => { if (el) thinkingDotsRef.current[2] = el; }} className="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-neutral-400"></div>
                                   </div>
                                ) : (
                                   <div 
@@ -315,7 +321,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
                                         <div className="p-3 rounded-xl bg-[#151515] border border-white/5 hover:border-white/20 transition-colors group cursor-pointer">
                                            <div className="flex justify-between items-start mb-2">
                                               <span className="text-xs font-mono text-neutral-500">US-101</span>
-                                              <div className="w-4 h-4 rounded-full border border-white/20 group-hover:bg-green-500/20 group-hover:border-green-500/50 transition-colors"></div>
+                                              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border border-white/20 group-hover:bg-green-500/20 group-hover:border-green-500/50 transition-colors"></div>
                                            </div>
                                            <div className="text-sm text-white font-medium mb-1">Request Password Reset</div>
                                            <div className="text-xs text-neutral-400">As a user, I want to request a reset link...</div>
@@ -323,7 +329,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
                                         <div className="p-3 rounded-xl bg-[#151515] border border-white/5 hover:border-white/20 transition-colors group cursor-pointer">
                                            <div className="flex justify-between items-start mb-2">
                                               <span className="text-xs font-mono text-neutral-500">US-102</span>
-                                              <div className="w-4 h-4 rounded-full border border-white/20 group-hover:bg-green-500/20 group-hover:border-green-500/50 transition-colors"></div>
+                                              <div className="w-3 h-3 md:w-4 md:h-4 rounded-full border border-white/20 group-hover:bg-green-500/20 group-hover:border-green-500/50 transition-colors"></div>
                                            </div>
                                            <div className="text-sm text-white font-medium mb-1">Reset Token Validation</div>
                                            <div className="text-xs text-neutral-400">System validates the token expiry and integrity...</div>
@@ -348,7 +354,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
                       </div>
                    </div>
                    <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden">
-                      <div className="w-[70%] bg-green-500 h-full rounded-full"></div>
+                      <div className="w-[60%] md:w-[70%] bg-green-500 h-full rounded-full"></div>
                    </div>
                 </div>
 
@@ -360,7 +366,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenWaitlist }) => {
         </div>
         
         {/* Glow under the mockup */}
-        <div className="absolute -bottom-20 left-10 right-10 h-20 bg-blue-500/20 blur-[100px]" />
+        <div className="absolute -bottom-20 left-10 right-10 h-16 md:h-20 bg-blue-500/20 blur-[100px]" />
       </div>
       
     </section>

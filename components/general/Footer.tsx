@@ -152,7 +152,7 @@ const Footer: React.FC = () => {
               const section = footerSections[sectionKey];
 
               return (
-                <div key={section.id} data-footer-item className="flex flex-col gap-1">
+                <div key={section.id} data-footer-item className="flex flex-col gap-1 text-center lg:text-left">
                   <h4 className="font-semibold text-white">{section.title}</h4>
                   {section.links.map((link) =>
                     link.href.startsWith('http') ? (

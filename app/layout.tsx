@@ -1,7 +1,13 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import ReCaptchaProvider from '../components/providers/ReCaptchaProvider'
 import { GoogleAnalytics, GoogleTagManager, MicrosoftClarity } from '../components/analytics'
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+}
 
 export const metadata: Metadata = {
   title: 'Patty | Your AI Co-founder for Execution',

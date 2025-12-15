@@ -88,7 +88,7 @@ const Features: React.FC = () => {
             <p className="text-neutral-400 text-lg">The difference between planning and execution.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {impact.map((item, idx) => (
               <div key={idx} className={item.className}>
                 {item.component}
