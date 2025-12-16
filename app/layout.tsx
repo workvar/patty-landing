@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import './globals.css'
 import ReCaptchaProvider from '../components/providers/ReCaptchaProvider'
 import { GoogleAnalytics, GoogleTagManager, MicrosoftClarity } from '../components/analytics'
+import SupabaseKeepAlive from '../components/analytics/SupabaseKeepAlive'
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -40,6 +41,7 @@ export default function RootLayout({
         <GoogleTagManager />
         <GoogleAnalytics />
         <MicrosoftClarity />
+        <SupabaseKeepAlive />
         <ReCaptchaProvider>
           {children}
         </ReCaptchaProvider>
