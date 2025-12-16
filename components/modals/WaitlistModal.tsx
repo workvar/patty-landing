@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { X, CheckCircle, Loader2 } from 'lucide-react';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { trackWaitlistSuccess, trackWaitlistFailure } from '@/lib/analytics';
 
 interface WaitlistModalProps {
   isOpen: boolean;
@@ -145,9 +146,12 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    let errorTracked = false;
 
     try {
       if (!executeRecaptcha) {
+        trackWaitlistFailure('reCAPTCHA not loaded');
+        errorTracked = true;
         throw new Error('reCAPTCHA not loaded');
       }
 
@@ -169,6 +173,12 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
       const data = await response.json();
 
       if (!response.ok) {
+        // Track failure event
+        trackWaitlistFailure(
+          data.error || 'Failed to join waitlist',
+          response.status
+        );
+        errorTracked = true;
         throw new Error(data.error || 'Failed to join waitlist');
       }
 
@@ -177,11 +187,21 @@ const WaitlistModal: React.FC<WaitlistModalProps> = ({ isOpen, onClose }) => {
         setUserNumber(data.user_number);
       }
 
+      // Track success event
+      trackWaitlistSuccess(data.user_number || null);
+
       setLoading(false);
       setStep('success');
     } catch (err) {
       setLoading(false);
-      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.');
+      const errorMessage = err instanceof Error ? err.message : 'Something went wrong. Please try again.';
+      
+      // Track failure event only if not already tracked (for network errors, etc.)
+      if (!errorTracked) {
+        trackWaitlistFailure(errorMessage);
+      }
+      
+      setError(errorMessage);
     }
   };
 
